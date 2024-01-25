@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   backend:
@@ -13,6 +13,18 @@ services:
     command: pnpm start:dev
     ports:
       - 3000:3000
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+      target: development
+    volumes:
+      - ./frontend:/usr/src/app
+    env_file:
+      - .env
+    command: pnpm dev --host
+    ports:
+      - 3001:3001
 
   postgres:
     image: postgres:16
